@@ -1,0 +1,130 @@
+<div class="grid">
+
+  <div class="card">
+    <h3>Crear usuario</h3>
+
+    <div class="msg ok" *ngIf="msg">{{ msg }}</div>
+    <div class="msg err" *ngIf="err">{{ err }}</div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+
+      <label>
+        ID Empleado
+        <input
+          type="number"
+          formControlName="idEmpleado"
+          placeholder="Ej: 101"
+        />
+      </label>
+
+      <label>
+        Usuario
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Ej: juan"
+        />
+      </label>
+
+      <label>
+        Email
+        <input
+          type="text"
+          formControlName="email"
+          placeholder="correo@email.com"
+        />
+      </label>
+
+      <label>
+        Contraseña
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Mínimo 8 caracteres"
+        />
+      </label>
+
+      <label>
+        Rol
+        <select formControlName="roles">
+          <option value="">—</option>
+          <option *ngFor="let r of roles()" [value]="r.id">
+            {{ r.name }}
+          </option>
+        </select>
+      </label>
+
+      <label class="chk">
+        <input type="checkbox" formControlName="activo" />
+        Activo
+      </label>
+
+      <button class="btn" type="submit">
+        Guardar
+      </button>
+
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Listado</h3>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>ID Empleado</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Estado</th>
+          <th style="width: 220px;">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let u of usuarios">
+
+          <td>{{ u.idEmpleado }}</td>
+          <td>{{ u.username }}</td>
+          <td>{{ u.email }}</td>
+
+          <td>
+            <span *ngIf="u.roles.length === 0">—</span>
+
+            <span *ngFor="let rid of u.roles; let last = last">
+              {{ rolName(rid) }}
+              <span *ngIf="!last">, </span>
+            </span>
+          </td>
+
+          <td>
+            <span class="badge" [class.badge--off]="u.bloqueado || !u.activo">
+              {{ u.bloqueado ? 'Bloqueado' : (u.activo ? 'Activo' : 'Inactivo') }}
+            </span>
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="btn btn--line"
+              (click)="toggle(u)"
+            >
+              {{ u.bloqueado ? 'Desbloquear' : 'Bloquear' }}
+            </button>
+
+            <button
+              type="button"
+              class="btn btn--danger"
+              (click)="delete(u)"
+            >
+              Inactivar
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

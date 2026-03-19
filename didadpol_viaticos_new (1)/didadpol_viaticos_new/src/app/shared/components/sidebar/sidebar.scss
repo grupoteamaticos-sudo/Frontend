@@ -1,0 +1,80 @@
+.sb {
+  height: 100vh;
+  background: linear-gradient(180deg, var(--brand-blue) 0%, #0b4aa2 100%);
+  color: #fff;
+  padding: 14px 12px;
+  position: sticky;
+  top: 0;
+}
+
+.sb__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 10px;
+}
+
+.sb__logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  font-weight: 800;
+}
+
+.sb__title {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.sb__subtitle {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.sb__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+}
+
+.sb__section {
+  margin: 10px 8px 6px;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  opacity: 0.75;
+}
+
+.sb__nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.sb__nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sb__nav a.active {
+  background: rgba(255, 255, 255, 0.16);
+  position: relative;
+}
+
+.sb__nav a.active::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 6px;
+  background: var(--brand-orange);
+}

@@ -1,0 +1,88 @@
+.wrap { padding: 18px; }
+
+.head h2 { margin: 0 0 6px 0; font-size: 20px; }
+.head p { margin: 0 0 14px 0; color: #6b7280; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 14px;
+}
+@media (max-width: 1150px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+}
+
+h3 { margin: 0 0 12px 0; }
+h4 { margin: 0 0 10px 0; }
+
+.form { display: grid; gap: 10px; }
+label { display: grid; gap: 6px; font-weight: 700; color: #0f172a; }
+input, select {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  outline: none;
+}
+
+.sep { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 110px 140px;
+  gap: 10px;
+}
+@media (max-width: 900px) {
+  .detailGrid { grid-template-columns: 1fr 1fr; }
+}
+.span2 { grid-column: span 2; }
+
+.btn {
+  border: none;
+  background: var(--brand-orange);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  width: fit-content;
+}
+.btn--line { background: #fff; border: 1px solid var(--border); }
+.btn--danger { background: #ef4444; color: #fff; }
+.btn--sm { padding: 6px 10px; border-radius: 10px; font-weight: 900; }
+
+.tbl { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.tbl th, .tbl td {
+  border-bottom: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.filters input { flex: 1; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #075985;
+  font-weight: 900;
+}
+
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #6b7280; }
+.mini { margin-top: 10px; color: #6b7280; }
+
+.msg { padding: 10px; border-radius: 10px; margin-bottom: 10px; }
+.ok { background: #dcfce7; }
+.err { background: #fee2e2; }

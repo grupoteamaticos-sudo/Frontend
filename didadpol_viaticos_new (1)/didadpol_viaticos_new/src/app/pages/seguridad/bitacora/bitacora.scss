@@ -1,0 +1,36 @@
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+h3 { margin: 0; }
+
+.btn {
+  border: none;
+  background: var(--brand-orange);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn--line {
+  background: #fff;
+  border: 1px solid var(--border);
+}
+
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th, .tbl td { border-bottom: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #075985;
+  font-weight: 800;
+}
+
+.mono { color: #6b7280; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }

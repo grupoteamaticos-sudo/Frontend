@@ -1,0 +1,60 @@
+<div class="grid">
+  <div class="card">
+    <h3>Crear permiso</h3>
+
+    <div class="msg ok" *ngIf="msg">{{ msg }}</div>
+    <div class="msg err" *ngIf="err">{{ err }}</div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="create()">
+      <label>
+        Code
+        <input
+          type="text"
+          formControlName="code"
+          placeholder="USUARIO_VER"
+        />
+      </label>
+
+      <label>
+        Nombre
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Ver usuarios"
+        />
+      </label>
+
+      <button class="btn" type="submit">Guardar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Listado</h3>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Code</th>
+          <th style="width: 130px;">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of permisos">
+          <td>{{ p.name }}</td>
+          <td class="code">{{ p.code }}</td>
+          <td>
+            <button
+              class="btn btn--danger"
+              type="button"
+              (click)="delete(p)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

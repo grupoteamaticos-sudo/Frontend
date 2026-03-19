@@ -1,0 +1,71 @@
+<div class="grid">
+
+  <div class="card">
+    <h3>Crear rol</h3>
+
+    <div class="msg ok" *ngIf="msg">{{ msg }}</div>
+    <div class="msg err" *ngIf="err">{{ err }}</div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="create()">
+      <label>
+        Nombre del rol
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Ej: CONDUCTOR"
+        />
+      </label>
+
+      <button class="btn" type="submit">
+        Guardar
+      </button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Roles</h3>
+
+    <div class="chips">
+      <button
+        type="button"
+        class="chip"
+        *ngFor="let r of roles"
+        (click)="selectRole(r.id)"
+      >
+        {{ r.name }}
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Permisos del rol</h3>
+
+    <ng-container *ngIf="role(); else noRole">
+      <p><strong>Rol seleccionado:</strong> {{ role()?.name }}</p>
+
+      <div class="perm-list">
+        <label class="perm-item" *ngFor="let p of permisos">
+          <input
+            type="checkbox"
+            [checked]="hasPerm(p.id)"
+            (change)="togglePerm(p.id)"
+          />
+          <span>{{ p.code }} - {{ p.name }}</span>
+        </label>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn--danger"
+        (click)="deleteRole(role()!)"
+      >
+        Eliminar rol
+      </button>
+    </ng-container>
+
+    <ng-template #noRole>
+      <p>Seleccioná un rol para administrar sus permisos.</p>
+    </ng-template>
+  </div>
+
+</div>

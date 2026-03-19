@@ -1,0 +1,76 @@
+.nav-didadpol{
+  height: 48px; /* parecido al de la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(180deg, var(--didadpol-blue), var(--didadpol-blue-2));
+  padding: 0 14px;
+  overflow: hidden;
+}
+
+.nav-left{
+  display: flex;
+  align-items: center;
+  gap: 0; /* pegadito como menú real */
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+.nav-item{
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 14px;
+
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 14px;     /* tamaño similar */
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  border-top: 3px solid transparent; /* para que no salte al activar */
+  transition: background .15s ease;
+}
+
+.nav-item:hover{
+  background: rgba(255,255,255,.10);
+}
+
+.nav-item.active{
+  background: var(--didadpol-orange);
+  color: #0b1b2b;
+}
+
+.nav-right{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 14px;
+}
+
+.nav-img{
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  background: rgba(255,255,255,.08);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* placeholder opcional */
+.nav-img-placeholder{
+  height: 34px;
+  min-width: 120px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.10);
+  color: #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 700;
+  font-size: 12px;
+}

@@ -1,0 +1,32 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.sidebar {
+  width: 260px;
+  flex: 0 0 260px;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  flex: 0 0 auto;
+}
+
+.content {
+  flex: 1 1 auto;
+  padding: 0;
+  min-height: 0;
+  background: var(--bg);
+}
+
+.footer {
+  flex: 0 0 auto;
+}

@@ -1,0 +1,53 @@
+.um{ position: relative; }
+
+.um__btn{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 6px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.um__avatar{
+  width: 32px; height: 32px;
+  border-radius: 999px;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,.18);
+  font-weight: 900;
+}
+
+.um__info{ display:flex; flex-direction: column; line-height: 1.1; text-align:left; }
+.um__name{ font-weight: 800; font-size: 13px; }
+.um__mail{ font-size: 12px; opacity: .85; }
+
+.um__panel{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 180px;
+  box-shadow: 0 16px 30px rgba(0,0,0,.16);
+  padding: 8px;
+  z-index: 50;
+}
+
+.um__item{
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 800;
+}
+
+.um__item:hover{
+  background: #f3f4f6;
+}

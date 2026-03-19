@@ -1,0 +1,13 @@
+<div class="um">
+  <button class="um__btn" type="button" (click)="toggle()">
+    <span class="um__avatar">{{ (auth.getUser()?.username || 'A')[0].toUpperCase() }}</span>
+    <span class="um__txt">
+      <span class="um__name">{{ auth.getUser()?.username || 'usuario' }}</span>
+      <span class="um__mail">{{ auth.getUser()?.email || '' }}</span>
+    </span>
+  </button>
+
+  <div class="um__panel" *ngIf="open">
+    <button class="um__item" type="button" (click)="logout()">Cerrar sesión</button>
+  </div>
+</div>

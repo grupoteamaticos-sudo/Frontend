@@ -1,0 +1,26 @@
+.card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+  max-width: 520px;
+}
+
+h3 { margin: 0 0 12px 0; }
+
+.form { display: grid; gap: 10px; }
+label { display: grid; gap: 6px; font-weight: 600; }
+input { border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+
+.btn {
+  border: none;
+  background: var(--brand-orange);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.msg { padding: 10px; border-radius: 10px; margin-bottom: 10px; }
+.ok { background: #dcfce7; }
+.err { background: #fee2e2; }

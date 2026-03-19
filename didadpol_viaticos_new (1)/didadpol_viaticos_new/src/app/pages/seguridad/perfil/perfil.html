@@ -1,0 +1,39 @@
+<div class="grid">
+  <div class="card">
+    <h3>Mi perfil</h3>
+
+    <div class="msg ok" *ngIf="msg">{{ msg }}</div>
+    <div class="msg err" *ngIf="err">{{ err }}</div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="guardar()">
+      <label>
+        Usuario
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Tu usuario"
+        />
+      </label>
+
+      <label>
+        Email
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="tucorreo@email.com"
+        />
+      </label>
+
+      <label>
+        Rol
+        <input
+          type="text"
+          formControlName="role"
+          readonly
+        />
+      </label>
+
+      <button class="btn" type="submit">Guardar</button>
+    </form>
+  </div>
+</div>

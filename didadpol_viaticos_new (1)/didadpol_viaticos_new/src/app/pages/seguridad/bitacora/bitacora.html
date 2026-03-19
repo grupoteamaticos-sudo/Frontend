@@ -1,0 +1,31 @@
+<div class="card">
+  <h3>Bitácora</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Usuario</th>
+        <th>Tipo</th>
+        <th>Módulo</th>
+        <th>Detalle</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let e of events">
+        <td class="mono">{{ e.at }}</td>
+        <td>{{ e.user }}</td>
+        <td><span class="badge">{{ e.type }}</span></td>
+        <td>{{ e.module }}</td>
+        <td>{{ e.detail }}</td>
+      </tr>
+
+      <tr *ngIf="events.length === 0">
+        <td colspan="5">No hay eventos en la bitácora.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn" type="button" (click)="clear()">Limpiar</button>
+</div>

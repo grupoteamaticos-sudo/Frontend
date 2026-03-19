@@ -1,0 +1,52 @@
+<div class="seguridad-page">
+  <div class="seguridad-header">
+    <h1>Autenticación y Seguridad</h1>
+    <p>Administrá usuarios, roles, permisos y revisá la bitácora.</p>
+  </div>
+
+  <nav class="seguridad-tabs">
+    <a
+      routerLink="/seguridad/usuarios"
+      routerLinkActive="active"
+      class="tab-link"
+    >
+      Usuarios
+    </a>
+
+    <a
+      routerLink="/seguridad/roles"
+      routerLinkActive="active"
+      class="tab-link"
+    >
+      Roles
+    </a>
+
+    <a
+      routerLink="/seguridad/permisos"
+      routerLinkActive="active"
+      class="tab-link"
+    >
+      Permisos
+    </a>
+
+    <a
+      routerLink="/seguridad/perfil"
+      routerLinkActive="active"
+      class="tab-link"
+    >
+      Perfil
+    </a>
+
+    <a
+      routerLink="/seguridad/bitacora"
+      routerLinkActive="active"
+      class="tab-link"
+    >
+      Bitácora
+    </a>
+  </nav>
+
+  <div class="seguridad-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

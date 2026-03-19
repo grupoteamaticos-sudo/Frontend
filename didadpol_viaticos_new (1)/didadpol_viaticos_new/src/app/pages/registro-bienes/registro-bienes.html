@@ -1,0 +1,88 @@
+<div class="card">
+  <h3>Registro de Bienes</h3>
+
+  <div class="msg ok" *ngIf="msg">{{ msg }}</div>
+  <div class="msg err" *ngIf="err">{{ err }}</div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+
+    <label>
+      Tipo de registro
+      <select formControlName="tipoRegistro">
+        <option *ngFor="let t of tiposRegistro" [value]="t">{{ t }}</option>
+      </select>
+    </label>
+
+    <label>
+      Proveedor (opcional)
+      <input type="text" formControlName="proveedor" />
+    </label>
+
+    <label>
+      Documento (opcional)
+      <input type="text" formControlName="documento" />
+    </label>
+
+    <label>
+      Descripción (opcional)
+      <input type="text" formControlName="descripcion" />
+    </label>
+
+    <!-- ✅ DETALLES -->
+    <div class="section">
+      <h4>Detalles</h4>
+
+      <div formArrayName="detalles" class="grid">
+        <div
+          class="detalle-row"
+          *ngFor="let d of detallesFA.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <label>
+            Código
+            <input type="text" formControlName="codigo" placeholder="Ej: BIEN-009" />
+          </label>
+
+          <label>
+            Nombre
+            <input type="text" formControlName="nombre" placeholder="Ej: Laptop DELL" />
+          </label>
+
+          <label>
+            Tipo de bien
+            <select formControlName="tipo">
+              <option *ngFor="let tb of tiposBien" [value]="tb">{{ tb }}</option>
+            </select>
+          </label>
+
+          <label>
+            Cantidad
+            <input type="number" min="1" formControlName="cantidad" />
+          </label>
+
+          <label>
+            Nota (opcional)
+            <input type="text" formControlName="nota" placeholder="Ej: Marca/serie" />
+          </label>
+
+          <div class="detalle-actions">
+            <button type="button" class="btn btn--sm" (click)="addDetalle()">
+              + Agregar detalle
+            </button>
+
+            <button
+              type="button"
+              class="btn btn--danger btn--sm"
+              (click)="removeDetalle(i)"
+              [disabled]="detallesFA.length <= 1"
+            >
+              Quitar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn" type="submit">Guardar registro</button>
+  </form>
+</div>

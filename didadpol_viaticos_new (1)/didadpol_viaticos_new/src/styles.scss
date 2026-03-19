@@ -1,0 +1,16 @@
+:root{
+  --brand-blue: #062f63;     /* ✅ más oscuro (DIDADPOL) */
+  --brand-blue-2: #0b4aa2;   /* ✅ degradado */
+  --brand-orange: #f2a83b;  /* ✅ naranja activo */
+
+  --bg: #f5f7fb;
+  --border: #e5e7eb;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+}

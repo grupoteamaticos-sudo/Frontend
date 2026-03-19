@@ -1,0 +1,88 @@
+<div class="page">
+  <h1>Movimientos / Kardex</h1>
+  <p class="sub">
+    Aquí se muestra el Kardex (consulta). Los movimientos NO se registran manualmente; se generan desde los procesos del sistema
+    (Asignación, Traslados, Actas, Mantenimiento, etc.).
+  </p>
+
+  <div class="alerts" *ngIf="msg || err">
+    <div class="ok" *ngIf="msg">{{ msg }}</div>
+    <div class="bad" *ngIf="err">{{ err }}</div>
+  </div>
+
+  <div class="grid">
+    <!-- Panel izquierdo -->
+    <div class="card">
+      <h2>Consulta</h2>
+
+      <div class="block">
+        <div class="label">Acciones</div>
+        <button class="btn" (click)="refresh()">Refrescar</button>
+      </div>
+
+      <div class="block">
+        <div class="label">Nota</div>
+        <div class="hint">
+          Si no ves movimientos, es normal: todavía no se han ejecutado procesos que alimenten el Kardex.
+          (Luego lo conectamos a Registro de Bienes / Traslado / Asignación).
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card">
+      <div class="head">
+        <h2>Kardex</h2>
+
+        <div class="filters">
+          <input placeholder="Buscar..." [(ngModel)]="fText" />
+
+          <select [(ngModel)]="fType">
+            <option value="TODOS">Todos</option>
+            <option value="ENTRADA">ENTRADA</option>
+            <option value="SALIDA">SALIDA</option>
+            <option value="TRASLADO">TRASLADO</option>
+            <option value="AJUSTE">AJUSTE</option>
+          </select>
+
+          <select [(ngModel)]="fWarehouseId">
+            <option value="TODOS">Todas las bodegas</option>
+            <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Tipo</th>
+              <th>Bien</th>
+              <th>Cant.</th>
+              <th>Origen</th>
+              <th>Destino</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let k of filtered()">
+              <td>{{ k.date }}</td>
+              <td><b>{{ k.type }}</b></td>
+              <td>{{ itemCode(k.itemId) }} - {{ itemName(k.itemId) }}</td>
+              <td>{{ k.qty }}</td>
+              <td>{{ warehouseName(k.fromWarehouseId) }}</td>
+              <td>{{ warehouseName(k.toWarehouseId) }}</td>
+              <td>{{ k.note || '—' }}</td>
+            </tr>
+
+            <tr *ngIf="filtered().length === 0">
+              <td colspan="7" class="empty">No hay movimientos con esos filtros.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

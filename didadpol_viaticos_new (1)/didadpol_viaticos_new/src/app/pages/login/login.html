@@ -1,0 +1,141 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logos">
+      <img src="assets/img/gobierno.png" alt="Gobierno" />
+      <img src="assets/img/didadpol.png" alt="DIDADPOL" />
+    </div>
+
+    <h1>Bienes / Logística</h1>
+    <p class="subtitle">
+      {{
+        step === 'CREDENCIALES'
+          ? 'Iniciá sesión para continuar'
+          : step === 'OTP'
+          ? 'Ingresá el código de verificación'
+          : step === 'RECOVERY_REQUEST'
+          ? 'Recuperá el acceso a tu cuenta'
+          : 'Restablecé tu contraseña'
+      }}
+    </p>
+
+    <div class="alert ok" *ngIf="msg">{{ msg }}</div>
+    <div class="alert err" *ngIf="err">{{ err }}</div>
+
+    <!-- LOGIN -->
+    <form
+      *ngIf="step === 'CREDENCIALES'"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="login-form"
+    >
+      <div class="field">
+        <label>Usuario</label>
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Tu usuario"
+        />
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Tu contraseña"
+        />
+      </div>
+
+      <button class="btn-primary" type="submit">Entrar</button>
+      <button class="btn-secondary" type="button" (click)="goRecovery()">
+        Recuperar contraseña
+      </button>
+    </form>
+
+    <!-- OTP -->
+    <form
+      *ngIf="step === 'OTP'"
+      [formGroup]="otpForm"
+      (ngSubmit)="verify()"
+      class="login-form"
+    >
+      <div class="field">
+        <label>Código OTP</label>
+        <input
+          type="text"
+          formControlName="code"
+          maxlength="6"
+          placeholder="Ej: 123456"
+        />
+      </div>
+
+      <button class="btn-primary" type="submit">Verificar</button>
+      <button class="btn-secondary" type="button" (click)="back()">
+        Volver
+      </button>
+    </form>
+
+    <!-- RECOVERY STEP 1 -->
+    <form
+      *ngIf="step === 'RECOVERY_REQUEST'"
+      [formGroup]="recoveryRequestForm"
+      (ngSubmit)="startRecovery()"
+      class="login-form"
+    >
+      <div class="field">
+        <label>Usuario o correo</label>
+        <input
+          type="text"
+          formControlName="identifier"
+          placeholder="usuario o correo"
+        />
+      </div>
+
+      <button class="btn-primary" type="submit">Enviar código</button>
+      <button class="btn-secondary" type="button" (click)="back()">
+        Volver
+      </button>
+    </form>
+
+    <!-- RECOVERY STEP 2 -->
+    <form
+      *ngIf="step === 'RECOVERY_RESET'"
+      [formGroup]="recoveryResetForm"
+      (ngSubmit)="finishRecovery()"
+      class="login-form"
+    >
+      <div class="field">
+        <label>Código OTP</label>
+        <input
+          type="text"
+          formControlName="code"
+          maxlength="6"
+          placeholder="Ej: 123456"
+        />
+      </div>
+
+      <div class="field">
+        <label>Nueva contraseña</label>
+        <input
+          type="password"
+          formControlName="newPassword"
+          placeholder="Nueva contraseña"
+        />
+      </div>
+
+      <div class="field">
+        <label>Confirmar contraseña</label>
+        <input
+          type="password"
+          formControlName="passwordConfirm"
+          placeholder="Confirmar contraseña"
+        />
+      </div>
+
+      <button class="btn-primary" type="submit">Cambiar contraseña</button>
+      <button class="btn-secondary" type="button" (click)="back()">
+        Volver
+      </button>
+    </form>
+  </div>
+</div>
