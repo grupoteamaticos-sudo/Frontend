@@ -1,5 +1,4 @@
 <div class="grid">
-
   <div class="card">
     <h3>Crear usuario</h3>
 
@@ -7,121 +6,74 @@
     <div class="msg err" *ngIf="err">{{ err }}</div>
 
     <form class="form" [formGroup]="form" (ngSubmit)="submit()">
-
       <label>
-        Seleccionar Empleado
+        Empleado
         <select formControlName="idEmpleado">
           <option value="">— Seleccione un empleado —</option>
-          <option *ngFor="let emp of listaEmpleados" [value]="emp.id_empleado">
-            {{ emp.id_empleado }} - {{ emp.nombre_completo }}
+          <option *ngFor="let emp of empleados" [value]="emp.id_empleado">
+            {{ emp.primer_nombre }} {{ emp.primer_apellido }}
           </option>
         </select>
       </label>
 
-      <label>
-        Usuario
-        <input
-          type="text"
-          formControlName="username"
-          placeholder="Ej: jose"
-        />
-      </label>
-
-      <label>
-        Email
-        <input
-          type="text"
-          formControlName="email"
-          placeholder="correo@email.com"
-        />
-      </label>
-
-      <label>
-        Contraseña
-        <input
-          type="password"
-          formControlName="password"
-          placeholder="Mínimo 8 caracteres"
-        />
-      </label>
+      <label>Usuario <input type="text" formControlName="username" /></label>
+      <label>Email <input type="email" formControlName="email" /></label>
+      <label>Contraseña <input type="password" formControlName="password" /></label>
 
       <label>
         Rol
         <select formControlName="roles">
           <option value="">— Seleccione un rol —</option>
-          <option *ngFor="let r of roles()" [value]="r.id">
+          <option *ngFor="let r of rolesCatalogo" [value]="r.id">
             {{ r.name }}
           </option>
         </select>
       </label>
 
       <label class="chk">
-        <input type="checkbox" formControlName="activo" />
-        Activo
+        <input type="checkbox" formControlName="activo" /> Activo
       </label>
 
-      <button class="btn" type="submit" [disabled]="form.invalid">
-        Guardar Usuario
+      <button class="btn" type="submit" [disabled]="form.invalid || loading">
+        {{ loading ? 'Cargando...' : 'Guardar' }}
       </button>
-
     </form>
   </div>
 
   <div class="card">
     <h3>Listado de Usuarios</h3>
-
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>ID Empleado</th>
-          <th>Usuario</th>
-          <th>Email</th>
-          <th>Roles</th>
-          <th>Estado</th>
-          <th style="width: 220px;">Acciones</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let u of usuarios">
-          <td>{{ u.idEmpleado }}</td>
-          <td>{{ u.username }}</td>
-          <td>{{ u.email }}</td>
-
-          <td>
-            <span *ngIf="u.roles?.length === 0">—</span>
-            <span *ngFor="let rid of u.roles; let last = last">
-              {{ rolName(rid) }}
-              <span *ngIf="!last">, </span>
-            </span>
-          </td>
-
-          <td>
-            <span class="badge" [class.badge--off]="u.bloqueado || !u.activo">
-              {{ u.bloqueado ? 'Bloqueado' : (u.activo ? 'Activo' : 'Inactivo') }}
-            </span>
-          </td>
-
-          <td>
-            <button
-              type="button"
-              class="btn btn--line"
-              (click)="toggle(u)"
-            >
-              {{ u.bloqueado ? 'Desbloquear' : 'Bloquear' }}
-            </button>
-
-            <button
-              type="button"
-              class="btn btn--danger"
-              (click)="delete(u)"
-            >
-              Inactivar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of usuarios">
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>
+              <span *ngFor="let rid of u.roles; let last = last">
+                {{ rolName(rid) }}<span *ngIf="!last">, </span>
+              </span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="u.activo ? 'badge--active' : 'badge--off'">
+                {{ u.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn--line" (click)="toggle(u)">Bloquear</button>
+              <button class="btn btn--danger" (click)="delete(u)">Inactivar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { SeguridadService, Usuario, Rol } from '../../../shared/services/seguridad.service';
 import { AuditService } from '../../../shared/services/audit.service';
@@ -16,12 +16,13 @@ import { AuthService } from '../../../shared/services/auth.service';
 export class SegUsuarios implements OnInit {
   usuarios: Usuario[] = [];
   rolesCatalogo: Rol[] = [];
+  empleados: any[] = []; // Declaración necesaria para evitar el error de la imagen a83e5d
 
   msg = '';
   err = '';
   loading = false;
 
-  form;
+  form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -49,15 +50,18 @@ export class SegUsuarios implements OnInit {
     this.err = '';
 
     try {
-      const [usuarios, roles] = await Promise.all([
+      // Cargamos los 3 datos en paralelo desde tu SeguridadService
+      const [u, r, e] = await Promise.all([
         this.seg.listUsuarios(),
         this.seg.listRoles(),
+        this.seg.listEmpleadosDisponibles()
       ]);
 
-      this.usuarios = usuarios;
-      this.rolesCatalogo = roles;
+      this.usuarios = u;
+      this.rolesCatalogo = r;
+      this.empleados = e;
     } catch (e: any) {
-      this.err = e?.error?.message || e?.error?.msg || 'No se pudo cargar seguridad.';
+      this.err = 'No se pudo cargar la información de seguridad.';
     } finally {
       this.loading = false;
     }
@@ -84,6 +88,7 @@ export class SegUsuarios implements OnInit {
         roleId: String(v.roles || ''),
       });
 
+      // Registro en auditoría
       const me = this.auth.getUser()?.username || 'admin';
       this.audit.log({
         user: me,
@@ -93,18 +98,10 @@ export class SegUsuarios implements OnInit {
       });
 
       this.msg = 'Usuario creado ✅';
-      this.form.reset({
-        idEmpleado: '',
-        username: '',
-        email: '',
-        password: '',
-        activo: true,
-        roles: '',
-      });
-
+      this.form.reset({ activo: true, idEmpleado: '', roles: '' });
       await this.loadAll();
     } catch (e: any) {
-      this.err = e?.error?.message || e?.error?.msg || 'No se pudo crear el usuario.';
+      this.err = e?.error?.message || 'No se pudo crear el usuario.';
     }
   }
 
@@ -114,7 +111,7 @@ export class SegUsuarios implements OnInit {
 
     try {
       await this.seg.toggleActivo(u.id);
-
+      
       const me = this.auth.getUser()?.username || 'admin';
       this.audit.log({
         user: me,
@@ -125,11 +122,12 @@ export class SegUsuarios implements OnInit {
 
       await this.loadAll();
     } catch (e: any) {
-      this.err = e?.error?.message || e?.error?.msg || 'No se pudo cambiar el estado.';
+      this.err = 'No se pudo cambiar el estado.';
     }
   }
 
   async delete(u: Usuario) {
+    if(!confirm('¿Desea inactivar este usuario?')) return;
     this.msg = '';
     this.err = '';
 
@@ -147,7 +145,7 @@ export class SegUsuarios implements OnInit {
       this.msg = 'Usuario inactivado ✅';
       await this.loadAll();
     } catch (e: any) {
-      this.err = e?.error?.message || e?.error?.msg || 'No se pudo inactivar el usuario.';
+      this.err = 'No se pudo inactivar el usuario.';
     }
   }
 
