@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-
 import { SeguridadService, Usuario, Rol } from '../../../shared/services/seguridad.service';
 import { AuditService } from '../../../shared/services/audit.service';
 import { AuthService } from '../../../shared/services/auth.service';
@@ -16,12 +15,11 @@ import { AuthService } from '../../../shared/services/auth.service';
 export class SegUsuarios implements OnInit {
   usuarios: Usuario[] = [];
   rolesCatalogo: Rol[] = [];
-  empleados: any[] = []; // Declaración necesaria para evitar el error de la imagen a83e5d
+  empleados: any[] = []; // Para guardar la lista de empleados
 
   msg = '';
   err = '';
   loading = false;
-
   form: FormGroup;
 
   constructor(
@@ -46,22 +44,17 @@ export class SegUsuarios implements OnInit {
 
   async loadAll() {
     this.loading = true;
-    this.msg = '';
-    this.err = '';
-
     try {
-      // Cargamos los 3 datos en paralelo desde tu SeguridadService
       const [u, r, e] = await Promise.all([
         this.seg.listUsuarios(),
         this.seg.listRoles(),
         this.seg.listEmpleadosDisponibles()
       ]);
-
       this.usuarios = u;
       this.rolesCatalogo = r;
       this.empleados = e;
     } catch (e: any) {
-      this.err = 'No se pudo cargar la información de seguridad.';
+      this.err = 'Error al cargar datos.';
     } finally {
       this.loading = false;
     }
@@ -70,90 +63,48 @@ export class SegUsuarios implements OnInit {
   async submit() {
     this.msg = '';
     this.err = '';
-
     if (this.form.invalid) {
-      this.err = 'Completá los campos requeridos.';
+      this.err = 'Complete los campos requeridos.';
       return;
     }
 
     try {
       const v = this.form.value;
-
       await this.seg.createUsuario({
-        idEmpleado: String(v.idEmpleado || ''),
-        username: String(v.username || ''),
-        email: String(v.email || ''),
-        password: String(v.password || ''),
+        idEmpleado: v.idEmpleado,
+        username: v.username,
+        email: v.email,
+        password: v.password,
         activo: !!v.activo,
-        roleId: String(v.roles || ''),
-      });
-
-      // Registro en auditoría
-      const me = this.auth.getUser()?.username || 'admin';
-      this.audit.log({
-        user: me,
-        type: 'CREATE',
-        module: 'Seguridad/Usuarios',
-        detail: `Creó usuario: ${v.username}`,
+        roleId: v.roles,
       });
 
       this.msg = 'Usuario creado ✅';
       this.form.reset({ activo: true, idEmpleado: '', roles: '' });
       await this.loadAll();
     } catch (e: any) {
-      this.err = e?.error?.message || 'No se pudo crear el usuario.';
+      this.err = e?.error?.message || 'Error al crear usuario.';
     }
   }
 
   async toggle(u: Usuario) {
-    this.msg = '';
-    this.err = '';
-
     try {
       await this.seg.toggleActivo(u.id);
-      
-      const me = this.auth.getUser()?.username || 'admin';
-      this.audit.log({
-        user: me,
-        type: 'UPDATE',
-        module: 'Seguridad/Usuarios',
-        detail: `Cambió bloqueo de ${u.username}`,
-      });
-
       await this.loadAll();
-    } catch (e: any) {
-      this.err = 'No se pudo cambiar el estado.';
-    }
+    } catch (e) { this.err = 'Error al cambiar estado.'; }
   }
 
   async delete(u: Usuario) {
-    if(!confirm('¿Desea inactivar este usuario?')) return;
-    this.msg = '';
-    this.err = '';
-
+    if(!confirm('¿Inactivar usuario?')) return;
     try {
       await this.seg.deleteUsuario(u.id);
-
-      const me = this.auth.getUser()?.username || 'admin';
-      this.audit.log({
-        user: me,
-        type: 'DELETE',
-        module: 'Seguridad/Usuarios',
-        detail: `Inactivó usuario: ${u.username}`,
-      });
-
-      this.msg = 'Usuario inactivado ✅';
       await this.loadAll();
-    } catch (e: any) {
-      this.err = 'No se pudo inactivar el usuario.';
-    }
+    } catch (e) { this.err = 'Error al inactivar.'; }
   }
 
   rolName(id: string) {
     return this.rolesCatalogo.find(r => r.id === id)?.name || '—';
   }
 
-  roles() {
-    return this.rolesCatalogo;
-  }
+  roles() { return this.rolesCatalogo; }
 }
