@@ -44,7 +44,9 @@
             ],
             "outputMode": "server",
             "security": {
-              "allowedHosts": []
+              "allowedHosts": [
+                "localhost",
+    "didadpol-web.onrender.com"]
             },
             "ssr": {
               "entry": "src/server.ts"
